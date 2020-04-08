@@ -6,10 +6,17 @@ const path = require('path');
 const pkg = require('../package.json');
 const addr = require('email-addresses');
 
+let userName
+let repoName
+
 function publish(config) {
   return new Promise((resolve, reject) => {
     const basePath = path.resolve(process.cwd(), program.dist);
     ghpages.publish(basePath, config, err => {
+
+      console.log('basePath: ', basePath)
+      console.log('config: ', config)
+      console.log('err: ', err)
       if (err) {
         return reject(err);
       }
@@ -103,6 +110,11 @@ function main(args) {
       user: user
     };
 
+    userName = program.repo
+    repoName = program.user
+
+    console.log('config is:', config)
+
     return publish(config);
   });
 }
@@ -110,7 +122,9 @@ function main(args) {
 if (require.main === module) {
   main(process.argv)
     .then(() => {
-      process.stdout.write('Published\n');
+
+      console.log('process: ', process)
+      process.stdout.write(`Published to https://github.com/${userName}/${repoName}\n`);
     })
     .catch(err => {
       process.stderr.write(`${err.message}\n`, () => process.exit(1));
