@@ -124,7 +124,8 @@ if (require.main === module) {
     .then(() => {
 
       console.log('process: ', process)
-      process.stdout.write(`Published to https://github.com/${userName}/${repoName}\n`);
+      process.stdout.write(`Published to https://github.com//${repoName}\n`);
+      process.stdout.write(`Published to https://${userName.toLowerCase()}.github.io/${repoName}/\n`);
     })
     .catch(err => {
       process.stderr.write(`${err.message}\n`, () => process.exit(1));
